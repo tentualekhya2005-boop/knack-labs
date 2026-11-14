@@ -1,0 +1,9 @@
+{
+  "summary": "Injected URL validation regression allowing javascript: schemes with HTTP 201; student correctly diagnosed that Pydantic URL validation in app/schemas/link.py was bypassed.",
+  "evidence": [
+    "Security regression test failed: test_validation_abuse_strings_return_400[javascript:alert(1)] expected 400 but received 201 Created.",
+    "Student accurately hypothesized that Pydantic URL validator in app/schemas/link.py was bypassed or removed, allowing malicious schemes into the system.",
+    "Student formulated remediation plan: inspect validator, re-enable strict scheme checks, and re-run test suite."
+  ]
+}
+

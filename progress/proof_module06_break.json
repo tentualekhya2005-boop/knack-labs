@@ -1,0 +1,12 @@
+{
+  "summary": "Diagnosed cache staleness bug caused by missing cache invalidation hook in link update mutation.",
+  "evidence": [
+    "Identified root cause: update_link service modified PostgreSQL but omitted cache_service.invalidate_redirect_target call, causing subsequent redirects to serve stale cached destination.",
+    "Verified failure symptom via pytest test_cache_invalidation_on_update failing with AssertionError: 'https://original.example.com' != 'https://updated-target.example.org'.",
+    "Prescribed remediation: invoke cache_service.invalidate_redirect_target(link.code) immediately after committing DB update."
+  ],
+  "artifacts": [
+    "progress/state.json"
+  ]
+}
+

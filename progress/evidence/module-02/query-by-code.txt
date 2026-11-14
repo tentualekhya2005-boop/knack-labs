@@ -1,0 +1,4 @@
+INSERTED_CODE: gmrit-launch
+SELECTED_CODE: gmrit-launch
+MATCHED_LONG_URL: https://gmrit.edu.in/du/engineering
+RECORDED_CLICK_ID: 1

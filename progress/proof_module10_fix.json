@@ -1,0 +1,16 @@
+{
+  "summary": "Fixed deployment port mismatch defect by restoring dynamic ${PORT:-8000} port binding in railway.json and Dockerfile while preserving startup Alembic database migrations.",
+  "evidence": [
+    "Updated apps/api/railway.json startCommand to evaluate ${PORT:-8000} dynamically, ensuring compatibility with Railway's ephemeral container port assignment.",
+    "Updated apps/api/Dockerfile CMD to evaluate ${PORT:-8000} with 0.0.0.0 host binding and automated startup migrations (alembic upgrade head).",
+    "Verified live probe script progress/evidence/module-10/build-evidence.txt: all 6 deployment verification steps passing including liveness probe, readiness probe, and configuration validation.",
+    "All 64 automated regression tests passing in pytest across all modules."
+  ],
+  "artifacts": [
+    "apps/api/railway.json",
+    "apps/api/Dockerfile",
+    "apps/api/scripts/verify_module10_build.py",
+    "progress/evidence/module-10/build-evidence.txt"
+  ]
+}
+

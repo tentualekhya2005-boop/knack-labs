@@ -1,0 +1,15 @@
+{
+  "summary": "Verified core asynchronous queue concepts: at-least-once delivery retry risks, UUID-based event_id idempotency keys with atomic ON CONFLICT DO NOTHING database handling, and graceful degradation during queue broker outages.",
+  "evidence": [
+    "Explained root cause of duplicate processing: worker commits to database but crashes or experiences network partition before delivering ACK to queue broker, causing automatic redelivery.",
+    "Articulated idempotency key design: producer generates UUID event_id, persisted in click_events table under UNIQUE constraint with ON CONFLICT (event_id) DO NOTHING to safely ignore replayed duplicate deliveries.",
+    "Justified graceful degradation: redirect critical path must complete HTTP 302 without blocking on telemetry failures, with transactional outbox or durable buffers recommended if zero event loss is required."
+  ],
+  "artifacts": [
+    "progress/evidence/module-07/build-evidence.txt",
+    "apps/api/app/worker.py",
+    "apps/api/app/core/queue.py",
+    "apps/api/tests/test_analytics_and_jobs.py"
+  ]
+}
+

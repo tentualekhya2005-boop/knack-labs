@@ -1,0 +1,11 @@
+{
+  "summary": "Implemented Module 03 Core API in FastAPI: link creation with strict URL validation, listing, retrieval by ID, /r/{code} redirect with click logging, and verified all 10 validation abuse cases return HTTP 400.",
+  "evidence": [
+    "POST /links creates shortened link returning HTTP 201 with id, code, short_url, long_url, and created_at.",
+    "GET /r/{code} returns HTTP 302 with Location header pointing to destination URL and records click event in database.",
+    "GET /health returns HTTP 200 with {'ok': true}, proving Option A (/r/ prefix) prevents collision with system endpoints.",
+    "URL validation strictly enforces http/https schemes and rejects all 10 abuse strings with HTTP 400 (javascript, data:, scheme-relative, encoded slashes, backslashes, userinfo @, and newline control chars).",
+    "Automated test suite passed 26/26 tests across apps/api/tests/test_links.py, test_config.py, test_health.py, and test_links_db.py."
+  ]
+}
+

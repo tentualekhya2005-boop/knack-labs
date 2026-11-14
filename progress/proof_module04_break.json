@@ -1,0 +1,9 @@
+{
+  "summary": "Injected IDOR vulnerability bypassing owner scoping in get_link_by_id; student correctly identified the missing tenant ownership check in the database query.",
+  "evidence": [
+    "Automated security isolation test failed: test_multi_tenant_isolation_and_idor_prevention returned HTTP 200 instead of HTTP 404.",
+    "Student accurately diagnosed that authentication succeeded but authorization failed because the query looked up only by link ID without verifying tenant ownership.",
+    "Student proposed filtering the query by both Link.id and authenticated principal_id, raising HTTP 404 if no match."
+  ]
+}
+

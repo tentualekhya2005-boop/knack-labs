@@ -1,0 +1,51 @@
+=== Health Check ===
+Status: 200
+Body: {"ok":true}
+
+=== Create Link ===
+Status: 201
+Body: {"id":17,"code":"OesXNmml","short_url":"http://127.0.0.1:8000/r/OesXNmml","long_url":"https://example.com","created_by":"default","created_at":"2026-11-05T01:47:50.744536+05:30","expires_at":null}
+
+=== Redirect /r/OesXNmml ===
+Status: 302
+Location: https://example.com
+
+=== Abuse Check: 'javascript:alert(1)' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme 'javascript'. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: 'JaVaScRiPt:alert(1)' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme 'javascript'. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: ' javascript:alert(1) ' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme 'javascript'. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: 'data:text/html,<svg/onload=alert(1)>' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme 'data'. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: '//evil.example.com' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme ''. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: 'http:%2f%2fevil.example.com' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, URL must have a valid host / netloc"],"message":"Validation failed"}
+
+=== Abuse Check: 'http%3A%2F%2Fevil.example.com' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, Invalid URL scheme ''. Only 'http' and 'https' are allowed."],"message":"Validation failed"}
+
+=== Abuse Check: 'http:\\\\evil.example.com' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, URL cannot contain backslashes"],"message":"Validation failed"}
+
+=== Abuse Check: 'https://good.com@evil.example.com' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, URLs with userinfo (credentials or '@') are not allowed"],"message":"Validation failed"}
+
+=== Abuse Check: 'https://example.com\n' ===
+Status: 400
+Body: {"detail":["body.long_url: Value error, URL contains illegal control characters"],"message":"Validation failed"}

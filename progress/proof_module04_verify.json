@@ -1,0 +1,9 @@
+{
+  "summary": "Verified Module 04 conceptual requirements: AuthN vs AuthZ distinction, token revocation patterns (denylist/short TTL), and public redirect reachability.",
+  "evidence": [
+    "Student accurately distinguished Authentication (identity verification) from Authorization (permission and tenant scoping).",
+    "Student explained production token revocation via Redis-backed JTI denylists with TTL and short-lived access token + refresh token rotations.",
+    "Student articulated why redirect endpoints must remain unauthenticated for zero-friction web navigation."
+  ]
+}
+

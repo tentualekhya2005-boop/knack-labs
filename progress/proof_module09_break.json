@@ -1,0 +1,11 @@
+{
+  "summary": "Reproduced and diagnosed test flakiness and shared state leakage: tests passed in isolation but failed in the full suite due to broader fixture scoping retaining committed database records across test cases.",
+  "evidence": [
+    "Observed test failure in tests/test_module09_integration_suite.py: test_6_url_validation_rejections failed with 'assert 4 == 0' when run in the full suite, but passed cleanly when run in isolation (-k test_6).",
+    "Formed accurate diagnostic hypothesis: previous tests (test_1, test_2, test_4, test_5) committed records into the shared database because the cleanup fixture was scoped to the module rather than per-function, leaking state between test boundaries."
+  ],
+  "artifacts": [
+    "apps/api/tests/test_module09_integration_suite.py"
+  ]
+}
+

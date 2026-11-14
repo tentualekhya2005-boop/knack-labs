@@ -1,0 +1,15 @@
+{
+  "summary": "Fixed broken worker idempotency by restoring event_id extraction from job payloads and enforcing atomic database deduplication with ON CONFLICT (event_id) DO NOTHING.",
+  "evidence": [
+    "Replaced 'event_id = None' with 'event_id = event_data.get(\"event_id\")' in apps/api/app/worker.py.",
+    "Verified in test_worker_idempotency_guarantee: first delivery inserts row (res['inserted']=True), replayed retry returns idempotent no-op (res['inserted']=False, count=1).",
+    "Verified live probes in progress/evidence/module-07/build-evidence.txt: all 8 steps passing including async queue processing, 404 tenant isolation, and queue outage fallback.",
+    "All 50 unit, security, caching, queue, and retention tests passing in pytest."
+  ],
+  "artifacts": [
+    "apps/api/app/worker.py",
+    "apps/api/tests/test_analytics_and_jobs.py",
+    "progress/evidence/module-07/build-evidence.txt"
+  ]
+}
+

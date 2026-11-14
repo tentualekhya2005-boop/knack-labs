@@ -1,0 +1,21 @@
+{
+  "summary": "Implemented async click ingestion queue with Celery/Redis, background worker with atomic idempotency (ON CONFLICT DO NOTHING), owner-scoped analytics API with date filters, SHA-256 IP hashing, 30-day retention purge, and graceful queue outage fallback.",
+  "evidence": [
+    "50/50 automated unit, security, caching, queue, idempotency, and retention tests passing in pytest (apps/api/tests/test_analytics_and_jobs.py).",
+    "Live probe verified: two redirects enqueued click tasks processed by Celery worker into PostgreSQL, updating GET /links/{id}/analytics click count.",
+    "Idempotency verified: replaying identical event_id payload produces duplicate_skipped with 1 row in click_events.",
+    "Privacy verified: IP addresses stored strictly as 64-char SHA-256 hashes, raw IPs never stored.",
+    "Retention purge verified: POST /links/maintenance/purge-clicks purged records older than 30-day cutoff.",
+    "Queue outage drill verified: redirect path returns HTTP 302 cleanly when Celery/Redis is down."
+  ],
+  "artifacts": [
+    "progress/evidence/module-07/build-evidence.txt",
+    "apps/api/app/worker.py",
+    "apps/api/app/core/queue.py",
+    "apps/api/app/models/click.py",
+    "apps/api/app/routers/links.py",
+    "apps/api/app/services/links_service.py",
+    "apps/api/tests/test_analytics_and_jobs.py"
+  ]
+}
+

@@ -1,0 +1,13 @@
+{
+  "summary": "Completed Module 08 CONTEXT micro-exercise: bounded page_size pagination, strict sort_by allowlisting to prevent injection, and mandatory tenant-scoped search isolation.",
+  "evidence": [
+    "Defined bounded pagination: default 20, maximum 100 records per request to prevent database memory exhaustion, slow responses, and DoS abuse.",
+    "Defined strict parameter allowlisting: sort_by restricted to ['created_at', 'click_count', 'updated_at'] rejecting invalid choices with HTTP 422, neutralizing dynamic ORDER BY SQL injection vectors.",
+    "Enforced query-level tenant isolation: all search filters must be bounded by Link.created_by == principal_id."
+  ],
+  "artifacts": [
+    "apps/api/app/schemas/link.py",
+    "apps/api/app/routers/links.py"
+  ]
+}
+

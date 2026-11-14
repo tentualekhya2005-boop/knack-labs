@@ -1,0 +1,16 @@
+{
+  "summary": "Fixed pagination off-by-one bug by restoring the correct 1-based page to 0-based offset translation formula: offset = (page - 1) * page_size, and added boundary test coverage for empty and out-of-range pages.",
+  "evidence": [
+    "Restored 'offset = (page - 1) * page_size' in apps/api/app/services/links_service.py, ensuring Page 1 starts at index 0 rather than skipping initial records.",
+    "Verified in test_search_and_pagination.py: Page 1 accurately returns items 1 and 2, while Page 2 returns items 3 and 4 with zero overlap.",
+    "Added test_pagination_boundaries_and_empty_pages verifying boundary conditions (out-of-range page numbers return empty items with accurate total count and total_pages, and minimum page_size=1).",
+    "Verified live probe script progress/evidence/module-08/build-evidence.txt: all 7 steps passing across keyword search, tag filtering, bounded pagination, and tenant isolation.",
+    "All 56 automated tests passing in pytest across all modules."
+  ],
+  "artifacts": [
+    "apps/api/app/services/links_service.py",
+    "apps/api/tests/test_search_and_pagination.py",
+    "progress/evidence/module-08/build-evidence.txt"
+  ]
+}
+

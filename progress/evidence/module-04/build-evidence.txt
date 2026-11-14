@@ -1,0 +1,32 @@
+=== 1. Protected Endpoint Without Auth ===
+Status: 401
+Body: {"detail":"Missing or invalid authentication token. Header 'Authorization: Bearer <TOKEN>' required."}
+
+=== 2. Login Tenant A ===
+Status: 200
+Principal: tenant_a
+
+=== 2b. Login Tenant B ===
+Status: 200
+Principal: tenant_b
+
+=== 3. Create Link as Tenant A ===
+Status: 201
+Body: {"id":45,"code":"s6BNhhJd","short_url":"http://127.0.0.1:8000/r/s6BNhhJd","long_url":"https://tenant-a.com/dashboard","created_by":"tenant_a","created_at":"2026-11-14T18:45:03.542135+05:30","expires_at":null}
+
+=== 4. Tenant B IDOR Probe on Tenant A's Link ===
+Status: 404
+Body: {"detail":"Link with ID 45 not found"}
+
+=== 5. Public Redirect (No Auth) ===
+Status: 302
+Location: https://tenant-a.com/dashboard
+
+=== 6a. Login Rate Limiting (10/min limit) ===
+StatusCodes: [401, 401, 401, 401, 401, 401, 401, 401, 429, 429, 429, 429, 429, 429, 429]
+
+=== 6b. Create Link Rate Limiting (30/min limit) ===
+StatusCodes: [201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 201, 429, 429, 429, 429, 429, 429]
+
+=== 6c. Redirect Rate Limiting (120/min limit) ===
+StatusCodes: [302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 302, 429, 429, 429, 429, 429, 429]

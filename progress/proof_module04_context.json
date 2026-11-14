@@ -1,0 +1,9 @@
+{
+  "summary": "Completed Module 04 Context: Identified public vs protected endpoint boundaries and articulated risks of open write/read surfaces.",
+  "evidence": [
+    "Student identified GET /r/{code} as necessarily public for universal redirect reachability without friction.",
+    "Student identified POST /links and GET /links as requiring authentication to prevent denial-of-service spam and multi-tenant data exfiltration.",
+    "Student clearly distinguished between Authentication (identity verification) and Authorization (access enforcement and IDOR mitigation)."
+  ]
+}
+

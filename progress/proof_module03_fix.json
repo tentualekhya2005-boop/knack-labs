@@ -1,0 +1,9 @@
+{
+  "summary": "Restored Pydantic URL validation in app/schemas/link.py, verified malicious requests return HTTP 400, and confirmed all 26 automated regression tests pass.",
+  "evidence": [
+    "Minimal reproduction probe with javascript:alert(1) returned HTTP 400 Bad Request with validation error details.",
+    "Restored validate_long_url(v) validator ensures all incoming links strictly conform to http:// or https:// schemes without backslashes or userinfo.",
+    "Full automated test suite passed 26/26 tests across unit and database verification."
+  ]
+}
+

@@ -1,0 +1,94 @@
+{
+  "bootcamp": {
+    "pretest": {
+      "self_rating": "new",
+      "health_vs_readiness": "Health checks if alive, readiness checks if able to handle traffic",
+      "abuse_vector": "Phishing and malicious redirect targets",
+      "http_500_triage": [
+        "logs and stack traces",
+        "database connection and server code"
+      ],
+      "idempotency": "Same operation repeated gives same result; prevents duplicate operations on retry",
+      "db_index": "Makes reads faster by avoiding full table scans",
+      "testing_style": "integration_heavy",
+      "shell": "PowerShell"
+    },
+    "product_scenario": "b2b_multi_tenant",
+    "completed_modules": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "current_module": 10,
+    "current_step": "completion",
+    "bootcamp_completed": true,
+    "completed_at": "2026-11-14T17:10:27.124Z",
+    "final_score": "100.0 / 100.0"
+  },
+  "decisions": {
+    "module_01": {
+      "project_layout": "monorepo",
+      "api_root": "apps/api/",
+      "framework": "fastapi"
+    },
+    "module_02": {
+      "database": "postgres",
+      "indexes": [
+        "idx_links_code_unique",
+        "idx_links_created_by",
+        "idx_clicks_link_id_clicked_at"
+      ]
+    },
+    "module_03": {
+      "redirect_style": "prefix_r",
+      "links_route": "links",
+      "redirect_prefix": "r",
+      "api_design_rule": "Strict edge validation allowlisting http/https schemes and fail-fast 400 Bad Request"
+    },
+    "module_04": {
+      "auth_method": "jwt",
+      "not_owner_status": 404,
+      "security_practice_learned": "Query-level tenant scoping to defeat IDOR and return 404 to hide cross-tenant existence",
+      "rate_limits": {
+        "login_per_min": 10,
+        "create_link_per_min": 30,
+        "redirect_per_min": 120,
+        "analytics_per_min": 60
+      }
+    },
+    "module_05": {
+      "error_strategy": "graceful",
+      "error_envelope": {
+        "code": "error.code",
+        "message": "error.message",
+        "request_id": "error.request_id"
+      },
+      "logging": "structured_json_with_redaction"
+    },
+    "module_06": {
+      "cache_strategy": "cache_aside",
+      "constraints_twist_type": "org_scoping",
+      "constraints_twist_action": "implement_now",
+      "cache_ttl_seconds": 300
+    },
+    "module_07": {
+      "jobs_strategy": "async_queue",
+      "retention_days": 30
+    },
+    "module_08": {
+      "search_strategy": "db_native",
+      "security_rule_learned": "Strict allowlisting for dynamic SQL schema identifiers (sort_by/order) and query-level tenant scoping",
+      "pagination": {
+        "default_page_size": 20,
+        "max_page_size": 100,
+        "offset_formula": "(page - 1) * page_size"
+      }
+    },
+    "module_09": {
+      "test_strategy": "integration_heavy",
+      "testing_rule_enforced": "Strict per-function fixture cleanup and relative delta assertions to prevent shared database state leakage and test flakiness"
+    },
+    "module_10": {
+      "deploy_strategy": "multi_service",
+      "migration_strategy": "startup",
+      "host_binding": "0.0.0.0",
+      "port_injection": "${PORT:-8000}"
+    }
+  }
+}

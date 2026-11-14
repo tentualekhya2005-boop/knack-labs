@@ -1,0 +1,9 @@
+{
+  "summary": "Restored database query owner scoping in get_link_by_id, verified IDOR mitigation, and confirmed all 35 regression tests pass.",
+  "evidence": [
+    "Restored query filter: Link.created_by == principal_id, ensuring the database engine never fetches cross-tenant records.",
+    "Regression test test_multi_tenant_isolation_and_idor_prevention passed with HTTP 404 Not Found.",
+    "Full automated test suite passed 35/35 tests across authentication, rate limiting, and CRUD operations."
+  ]
+}
+

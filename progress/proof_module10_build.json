@@ -1,0 +1,22 @@
+{
+  "summary": "Built production containerization, CI/CD pipeline, health and readiness endpoints, and deployment configuration for multi-service Railway release.",
+  "evidence": [
+    "Multi-stage Dockerfile built and verified with python:3.13-slim, binding to 0.0.0.0, dynamic PORT injection (${PORT:-8000}), container HEALTHCHECK, and automated startup migrations.",
+    "GitHub Actions CI workflow (.github/workflows/ci.yml) configured with PostgreSQL 16 and Redis 7 service containers, automated Alembic migrations, and pytest execution on every push and PR.",
+    "Liveness probe GET /health returns HTTP 200 immediately for process monitoring.",
+    "Readiness probe GET /ready validates PostgreSQL (SELECT 1) and Redis connectivity before routing traffic, returning HTTP 503 if database is unready.",
+    "Railway configuration and rollback architecture documented in apps/api/railway.json, apps/api/.env.railway.example, and apps/api/docs/DEPLOYMENT_AND_ROLLBACK.md.",
+    "All 64 tests passing in pytest across all 10 modules.",
+    "Live verification probes verified in progress/evidence/module-10/build-evidence.txt."
+  ],
+  "artifacts": [
+    "apps/api/Dockerfile",
+    ".github/workflows/ci.yml",
+    "apps/api/app/main.py",
+    "apps/api/railway.json",
+    "apps/api/.env.railway.example",
+    "apps/api/docs/DEPLOYMENT_AND_ROLLBACK.md",
+    "progress/evidence/module-10/build-evidence.txt"
+  ]
+}
+

@@ -1,0 +1,14 @@
+{
+  "summary": "Reproduced and diagnosed deployment port mismatch defect on Railway where startup commands hardcoded port 8000 instead of dynamically evaluating ${PORT}.",
+  "evidence": [
+    "Observed deployment verification failure: AssertionError: DEPLOYMENT CONFIG DEFECT: Railway startCommand hardcodes a static port instead of using ${PORT} in apps/api/railway.json and apps/api/Dockerfile.",
+    "Formed accurate diagnostic hypothesis: Railway dynamically assigns an ephemeral container port via $PORT, while Uvicorn was configured to bind statically to 8000, causing edge proxy routing timeouts.",
+    "Identified the resolution: update startup commands across railway.json and Dockerfile to dynamically bind to '0.0.0.0' and '${PORT:-8000}' while preserving pre-flight Alembic migrations."
+  ],
+  "artifacts": [
+    "apps/api/railway.json",
+    "apps/api/Dockerfile",
+    "apps/api/scripts/verify_module10_build.py"
+  ]
+}
+

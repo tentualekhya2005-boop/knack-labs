@@ -1,0 +1,12 @@
+{
+  "summary": "Reproduced and diagnosed broken worker idempotency: duplicate deliveries were treated as fresh insertions because the idempotency key was bypassed during event extraction and conflict resolution.",
+  "evidence": [
+    "Observed pytest test failure: test_worker_idempotency_guarantee failed with 'assert True is False' on second event replay.",
+    "Formed hypothesis: duplicate detection broke because event_id extraction was bypassed, disabling the database ON CONFLICT DO NOTHING idempotency guard."
+  ],
+  "artifacts": [
+    "apps/api/app/worker.py",
+    "apps/api/tests/test_analytics_and_jobs.py"
+  ]
+}
+

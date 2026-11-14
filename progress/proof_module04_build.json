@@ -1,0 +1,12 @@
+{
+  "summary": "Implemented JWT authentication, tenant owner scoping, and rate limiting in FastAPI for Module 04.",
+  "evidence": [
+    "Protected /links endpoints reject unauthenticated requests with HTTP 401 Unauthorized.",
+    "POST /auth/login validates credentials and issues signed JWT bearer tokens carrying caller principal_id.",
+    "Multi-tenant owner scoping enforced: Tenant B requesting Tenant A's link receives HTTP 404 Not Found (hiding existence to defeat IDOR enumeration).",
+    "Public redirect endpoint /r/{code} remains open without authentication, returning HTTP 302 with Location header.",
+    "Rate limiting verified across all tiers: login throttles at 10/min (429), link creation throttles at 30/min (429), and redirect throttles at 120/min (429).",
+    "Full automated test suite passed 35/35 tests across unit and multi-tenant security suites."
+  ]
+}
+

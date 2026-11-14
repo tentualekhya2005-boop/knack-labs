@@ -1,0 +1,9 @@
+{
+  "summary": "Selected B2B Multi-Tenant SaaS product scenario",
+  "evidence": [
+    "Selected scenario: b2b_multi_tenant (Org + Venue Lens)",
+    "Recorded product_scenario in progress/state.json",
+    "Constraints established: tenant isolation, owner/tenant scoping, IDOR prevention, and enforceable audit/retention policies"
+  ]
+}
+

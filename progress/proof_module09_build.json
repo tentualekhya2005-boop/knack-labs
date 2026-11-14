@@ -1,0 +1,21 @@
+{
+  "summary": "Built comprehensive integration-heavy test suite (Option B) covering link creation, redirect prefixing, auth protection, IDOR owner scoping, retention enforcement, URL validation bypass rejections, and worker idempotency.",
+  "evidence": [
+    "63/63 automated tests passing in pytest including 7 dedicated integration tests in apps/api/tests/test_module09_integration_suite.py.",
+    "Verified link creation: authenticated POST /links returns HTTP 201 with generated code and short_url.",
+    "Verified redirect: GET /r/{code} returns HTTP 302 with target Location header while system /health remains unaffected.",
+    "Verified auth protection: unauthenticated requests to protected endpoints strictly return HTTP 401.",
+    "Verified IDOR owner scoping: cross-tenant read/update/delete returns HTTP 404 (decisions.module_04.not_owner_status).",
+    "Verified retention enforcement: purge_old_clicks deletes records older than 30 days while retaining recent records.",
+    "Verified URL validation: rejects bypass vectors (javascript, data, unescaped schemes) with HTTP 400 Bad Request.",
+    "Verified async worker idempotency: calling process_click_event_record twice with identical event_id results in 1 inserted row and 1 deduplicated no-op.",
+    "All live verification probes passing in progress/evidence/module-09/build-evidence.txt with strict database isolation assertion."
+  ],
+  "artifacts": [
+    "progress/evidence/module-09/build-evidence.txt",
+    "apps/api/tests/test_module09_integration_suite.py",
+    "apps/api/scripts/verify_module09_build.py",
+    "progress/state.json"
+  ]
+}
+

@@ -1,0 +1,30 @@
+=== MODULE 06 BUILD VERIFICATION EVIDENCE ===
+
+[1] Authentication successful as Tenant A.
+[2] Created link ID 353 with code 'cache-mod6-test' -> https://original-site.example.com
+
+[3] First Redirect Probe:
+HTTP Status: 302
+Location Header: https://original-site.example.com
+X-Cache Header: MISS
+-> Confirmed: Cache MISS on first request, populated cache with TTL.
+
+[4] Second Redirect Probe:
+HTTP Status: 302
+Location Header: https://original-site.example.com
+X-Cache Header: HIT
+-> Confirmed: Cache HIT on second request, served directly from cache.
+
+[5] PATCH Link Target:
+HTTP Status: 200
+Updated Long URL: https://updated-enterprise-destination.example.org
+-> Confirmed: Database updated and cache entry invalidated.
+
+[6] Redirect Post-Update Probe:
+HTTP Status: 302
+Location Header: https://updated-enterprise-destination.example.org
+X-Cache Header: MISS
+-> Confirmed: No stale data served. Fetched updated URL from DB and re-warmed cache.
+
+[7] Fourth Redirect: Cache HIT on updated target (https://updated-enterprise-destination.example.org).
+

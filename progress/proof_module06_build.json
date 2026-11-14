@@ -1,0 +1,14 @@
+{
+  "summary": "Engineered Cache-Aside redirect resolution with TTL, cache invalidation on link update/delete, and graceful DB fallback on cache failure, verified across live probes and 45 automated test cases.",
+  "evidence": [
+    "Implemented apps/api/app/core/cache.py providing get_redirect_target, set_redirect_target with 300s TTL, and invalidate_redirect_target with in-memory/Redis fallback resilience.",
+    "Integrated Cache-Aside pattern into apps/api/app/routers/redirect.py: checks cache on hot path (returning X-Cache headers), populates on miss, and gracefully falls back to PostgreSQL on cache outages.",
+    "Added PATCH /links/{id} and DELETE /links/{id} with tenant owner scoping and automatic cache invalidation to defeat stale redirect targets.",
+    "Executed verify_module06_build.py capturing live evidence in progress/evidence/module-06/build-evidence.txt (verified Cache MISS -> HIT -> Invalidation -> fresh update) and passed all 45 automated tests in pytest."
+  ],
+  "artifacts": [
+    "progress/evidence/module-06/build-evidence.txt",
+    "progress/state.json"
+  ]
+}
+

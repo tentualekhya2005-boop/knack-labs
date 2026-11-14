@@ -1,0 +1,12 @@
+{
+  "summary": "Reproduced and diagnosed pagination off-by-one bug in search endpoint where 1-based page numbers were directly multiplied by page_size without subtracting 1 for SQL OFFSET.",
+  "evidence": [
+    "Observed 3 test failures in tests/test_search_and_pagination.py: test_keyword_search_and_tag_filtering, test_pagination_offset_calculation_and_metadata, and test_tenant_isolation_in_search.",
+    "Formed accurate diagnostic hypothesis: offset calculation used 'offset = page * page_size' instead of 'offset = (page - 1) * page_size', causing page 1 to skip all initial records and return an empty list or premature subsequent records."
+  ],
+  "artifacts": [
+    "apps/api/app/services/links_service.py",
+    "apps/api/tests/test_search_and_pagination.py"
+  ]
+}
+

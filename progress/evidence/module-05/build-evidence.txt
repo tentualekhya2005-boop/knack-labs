@@ -1,0 +1,21 @@
+=== MODULE 05 BUILD VERIFICATION EVIDENCE ===
+
+[1] Authentication successful. Acquired JWT token.
+[2] Validation Error Test:
+HTTP Status: 400
+X-Request-ID Header: req_91d2b3457f28
+Response Body: {"error":{"code":"VALIDATION_ERROR","message":"body.long_url: Value error, Invalid URL scheme ''. Only 'http' and 'https' are allowed.","request_id":"req_91d2b3457f28"},"detail":["body.long_url: Value error, Invalid URL scheme ''. Only 'http' and 'https' are allowed."]}
+-> Confirmed: HTTP 400 returned, consistent error envelope present, zero stack trace leaked.
+
+[3] Sentinel Secret Leak Test:
+HTTP Status: 401
+Response: {"error":{"code":"UNAUTHORIZED","message":"Invalid or expired token: Invalid JWT token structure","request_id":"req_28d1ded4b269"},"detail":"Invalid or expired token: Invalid JWT token structure"}
+[4] Server Log Audit:
+Sentinel 'DO_NOT_LOG_ME_123' found in server logs: False
+-> Confirmed: Sentinel secret was strictly REDACTED and never appeared in server logs.
+
+[5] Custom Request Tracing Test:
+HTTP Status: 404
+Returned X-Request-ID: req_custom_trace_alpha_1
+-> Confirmed: X-Request-ID perfectly propagated into envelope and headers.
+

@@ -1,0 +1,36 @@
+=== MODULE 10 BUILD VERIFICATION: CI/CD & DEPLOYMENT (RAILWAY) ===
+Timestamp: 2026-11-14T17:02:11.099878+00:00
+
+--- Step 1: Verify Production Multi-Stage Dockerfile ---
+Dockerfile verified at C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api\Dockerfile (multi-stage, 0.0.0.0 host binding, dynamic PORT, HEALTHCHECK, startup migrations).
+
+--- Step 2: Verify CI Pipeline (.github/workflows/ci.yml) ---
+CI workflow verified at C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\.github\workflows\ci.yml (PostgreSQL + Redis service containers, automated test suite, container validation).
+
+--- Step 3: Verify Liveness Probe (GET /health) ---
+Liveness probe GET /health -> Status: 200, Body: {'ok': True}
+CONFIRMED: /health responds immediately with HTTP 200.
+
+--- Step 4: Verify Readiness Probe (GET /ready) ---
+Readiness probe GET /ready -> Status: 200, Body: {'ok': True, 'status': 'ready', 'dependencies': {'database': 'ready', 'redis': 'ready'}}
+CONFIRMED: /ready validates PostgreSQL and Redis connectivity.
+
+--- Step 5: Verify Railway Config & Environment Documentation ---
+CONFIRMED: railway.json, .env.railway.example, and DEPLOYMENT_AND_ROLLBACK.md verified.
+
+--- Step 6: Full Pytest Regression Suite Execution ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api
+plugins: anyio-4.16.0
+collecting ... collected 2 items
+
+tests/test_health.py::test_health_check[asyncio] PASSED                  [ 50%]
+tests/test_health.py::test_ready_check[asyncio] PASSED                   [100%]
+
+============================== 2 passed in 3.36s ==============================
+
+CONFIRMED: All health and readiness tests passing.
+
+=== ALL MODULE 10 BUILD ACCEPTANCE CRITERIA VERIFIED ===

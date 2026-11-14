@@ -1,0 +1,65 @@
+=== MODULE 09 BUILD VERIFICATION: INTEGRATION-HEAVY TEST SUITE ===
+Timestamp: 2026-11-14T16:31:13.882058+00:00
+
+--- Guard 0: Database Isolation Safety Check ---
+Active DB Engine URL: postgresql://postgres:***@127.0.0.1:5432/upsk_sdf
+CONFIRMED: Database is confirmed strictly isolated to local testing instance.
+
+--- Step 1: Create Link (POST /links) ---
+Created link id=760, code=e2e-fastapi, short_url=http://127.0.0.1:8000/r/e2e-fastapi
+CONFIRMED: Link created successfully.
+
+--- Step 2: Redirect Behavior (GET /r/{code}) ---
+Redirect status: 302, Location: https://fastapi.tiangolo.com/tutorial
+Health check status: 200
+CONFIRMED: HTTP 302 redirect verified with Location header and /health intact.
+
+--- Step 3: Authentication Guard (HTTP 401) ---
+Unauthenticated request status: 401
+CONFIRMED: Protected routes enforce HTTP 401 without valid token.
+
+--- Step 4: IDOR Owner-Scoping Check (HTTP 404) ---
+Tenant Bob cross-tenant GET: 404, PATCH: 404, DELETE: 404
+CONFIRMED: Cross-tenant IDOR access strictly rejected with HTTP 404.
+
+--- Step 5: Retention Enforcement & Click Purge ---
+Purged count: 1, Remaining target probe event: probe-new-01
+CONFIRMED: Retention policy strictly purged events older than 30 days.
+
+--- Step 6: URL Validation Rejecting Malicious Schemes ---
+Rejected bypass payload: 'javascript:alert(1)' -> Status: 400
+Rejected bypass payload: 'data:text/html,<script>alert(1)</script>' -> Status: 400
+Rejected bypass payload: 'http%3A%2F%2Fevil.com' -> Status: 400
+CONFIRMED: Malicious URL bypass vectors rejected with HTTP 400.
+
+--- Step 7: Worker Deduplication & Idempotency Guarantee ---
+First delivery: inserted=True, Replayed delivery: inserted=False, Rows in DB: 1
+CONFIRMED: Worker idempotency safely suppresses duplicate event replay.
+
+--- Step 8: Automated Pytest Execution (test_module09_integration_suite.py) ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api
+plugins: anyio-4.16.0
+collecting ... collected 7 items
+
+tests/test_module09_integration_suite.py::test_1_create_link PASSED      [ 14%]
+tests/test_module09_integration_suite.py::test_2_redirect_prefix_r PASSED [ 28%]
+tests/test_module09_integration_suite.py::test_3_auth_protection_401 PASSED [ 42%]
+tests/test_module09_integration_suite.py::test_4_idor_owner_scoping_404 PASSED [ 57%]
+tests/test_module09_integration_suite.py::test_5_retention_enforcement PASSED [ 71%]
+tests/test_module09_integration_suite.py::test_6_url_validation_rejections PASSED [ 85%]
+tests/test_module09_integration_suite.py::test_7_async_worker_idempotency PASSED [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\ALEKHYA\OneDrive\Desktop\Knack_Labs\apps\api\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 7 passed, 1 warning in 6.31s =========================
+
+CONFIRMED: All 7 automated integration tests passed cleanly.
+
+=== ALL MODULE 09 BUILD ACCEPTANCE CRITERIA VERIFIED ===
