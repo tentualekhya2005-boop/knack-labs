@@ -7,10 +7,13 @@
 [![Redis](https://img.shields.io/badge/Redis-7.0-DC382D.svg)](https://redis.io/)
 [![Celery](https://img.shields.io/badge/Celery-5.4-37814A.svg)](https://docs.celeryq.dev/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
-[![Railway](https://img.shields.io/badge/Deploy-Railway-0B0D0E.svg)](https://railway.app/)
+[![Railway Live Demo](https://img.shields.io/badge/Live%20Demo-Railway-00C7B7.svg)](https://knack-labs-production.up.railway.app/docs)
 [![Tests](https://img.shields.io/badge/Tests-64%2F64%20Passing-brightgreen.svg)]()
 
 A high-performance, fault-tolerant, multi-tenant B2B URL Shortener and real-time click analytics backend engineered with **FastAPI**, **PostgreSQL**, **Redis**, and **Celery**.
+
+**Live Production API**: [https://knack-labs-production.up.railway.app](https://knack-labs-production.up.railway.app)  
+**Interactive Swagger Docs**: [https://knack-labs-production.up.railway.app/docs](https://knack-labs-production.up.railway.app/docs)
 
 Engineered from the ground up for high throughput, sub-10ms redirect latency, zero-downtime rolling deployments, strict cross-tenant data isolation, and defensive edge validation.
 
