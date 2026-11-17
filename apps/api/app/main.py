@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.core.errors import get_error_code, make_error_envelope
 from app.core.logging import logger, redact_text
-from app.routers import auth, links, redirect
+from app.routers import admin, auth, links, redirect
 
 
 @asynccontextmanager
@@ -322,6 +322,7 @@ def get_ready():
 
 
 app.include_router(auth.router)
+app.include_router(admin.router)
 app.include_router(links.router)
 app.include_router(redirect.router)
 

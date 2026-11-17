@@ -1,8 +1,7 @@
 {
-  "summary": "Completed Module 01 pretest and environment setup check",
+  "summary": "Completed Debugging & Incident Response Module 01 pretest and environment setup check",
   "evidence": [
-    "Environment verified: Node v22.17.1, npm 11.6.1, Python 3.13.5, pip 24.2, Git 2.52.0 on Windows PowerShell",
-    "Pretest calibration completed: student self-rated as new, accurately explained health vs readiness, open-redirect phishing risks, 500 error triage, idempotency in background jobs, DB index speed tradeoffs, and selected integration_heavy testing preference"
+    "Environment verified: Python 3.13.5, Docker 29.9.2, curl 8.22.0, Git 2.52.0 on Windows PowerShell",
+    "Pretest calibration completed: student self-rated as ok/moderate, identified resource/log/DB bottlenecks for slow apps, correctly diagnosed ECONNREFUSED 5432 to PostgreSQL service outage, articulated symptom vs root cause distinction, identified config/version drift between local and production, prioritized reading error messages and checking recent deployments during 2 AM incidents, and formulated 'What changes were made since yesterday?' follow-up"
   ]
 }
-

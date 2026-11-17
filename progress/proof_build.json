@@ -1,11 +1,11 @@
 {
-  "summary": "Completed Module 01 BUILD step for FastAPI in Monorepo layout",
+  "summary": "Completed Module 01 BUILD: Diagnosed and resolved Bug #1 (Env var mismatch) and Bug #2 (Pagination boundary & sorting)",
   "evidence": [
-    "Created monorepo layout at apps/api with app/config.py, app/main.py, requirements.txt, .env.example, and .env",
-    "Implemented fail-fast environment validation using Pydantic Settings requiring PORT between 1 and 65535",
-    "Verified failure-first drills: non-integer PORT ('abc') and out-of-range PORT ('70000') fail fast with clear exit before startup",
-    "Implemented GET /health returning {'ok': True}",
-    "Verified live server response via curl (CURL_OUTPUT: {\"ok\":true}) and full automated test suite (5 passed)"
+    "Created progress/module-01-diagnosis.md documenting hypotheses, observations, fixes, and verification proofs",
+    "Verified LinkOps infrastructure: infra/docker-compose.yml, worker/main.py, scripts/seed.py, apps/api/app/routers/admin.py",
+    "Diagnosed Bug #1: DB_URL in .env mismatched DATABASE_URL in config, resulting in empty DB URL crash; fixed by standardizing to DATABASE_URL",
+    "Diagnosed Bug #2: Off-by-one pagination (offset = page * limit) skipped first 10 items; missing ORDER BY caused unstable ordering",
+    "Fixed Bug #2: Implemented offset = (page - 1) * limit with deterministic order_by(Link.id.asc())",
+    "Seeded 25 test links and verified across page=1 (test01-test10), page=2 (test11-test20), and page=3 (test21-test25): exactly 25/25 unique items"
   ]
 }
-

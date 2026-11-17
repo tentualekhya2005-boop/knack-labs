@@ -1,9 +1,8 @@
 {
-  "summary": "Selected B2B Multi-Tenant SaaS product scenario",
+  "summary": "Locked in product scenario: URL Shortener Platform (linkops)",
   "evidence": [
-    "Selected scenario: b2b_multi_tenant (Org + Venue Lens)",
-    "Recorded product_scenario in progress/state.json",
-    "Constraints established: tenant isolation, owner/tenant scoping, IDOR prevention, and enforceable audit/retention policies"
+    "Confirmed scenario: linkops (URL shortener platform with redirect engine, admin endpoints, and asynchronous worker queue)",
+    "Hard constraints verified: low-latency redirects, strict admin authorization, accurate concurrent analytics, immediate cache invalidation on delete, and bounded worker retries",
+    "Recorded bootcamp.product_scenario = 'linkops' in progress/state.json"
   ]
 }
-

@@ -1,94 +1,49 @@
 {
+  "skill": "debugging-incident-response",
+  "session_id": "u9ryX34r4-lUa66-293rY",
   "bootcamp": {
     "pretest": {
-      "self_rating": "new",
-      "health_vs_readiness": "Health checks if alive, readiness checks if able to handle traffic",
-      "abuse_vector": "Phishing and malicious redirect targets",
-      "http_500_triage": [
-        "logs and stack traces",
-        "database connection and server code"
+      "self_rating": "ok",
+      "slow_app_checks": [
+        "CPU and memory usage",
+        "application logs",
+        "database and network performance"
       ],
-      "idempotency": "Same operation repeated gives same result; prevents duplicate operations on retry",
-      "db_index": "Makes reads faster by avoiding full table scans",
-      "testing_style": "integration_heavy",
-      "shell": "PowerShell"
+      "econnrefused_5432": "The PostgreSQL database is probably not running or is not accepting connections on port 5432",
+      "symptom_vs_root_cause": "A symptom is what we observe, while a root cause is the actual reason for the problem",
+      "local_vs_prod_discrepancy": [
+        "Different configurations or environment variables",
+        "Different software versions or dependencies"
+      ],
+      "first_action_error_vs_repro": "Read the error message carefully first – it helps understand where the problem occurred and gives clues about how to fix it",
+      "down_at_2am_first_action": "Check if anything was deployed recently – a recent deployment may have caused the issue, and we can consider rolling it back",
+      "coworker_worked_yesterday_followup": "What changes were made since yesterday?",
+      "os": "Windows 11",
+      "shell": "PowerShell",
+      "tools_verified": {
+        "python": "3.13.5",
+        "docker": "29.9.2",
+        "curl": "8.22.0",
+        "git": "2.52.0"
+      }
     },
-    "product_scenario": "b2b_multi_tenant",
-    "completed_modules": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "current_module": 10,
-    "current_step": "completion",
-    "bootcamp_completed": true,
-    "completed_at": "2026-11-14T17:10:27.124Z",
-    "final_score": "100.0 / 100.0"
+    "completed_modules": [1],
+    "current_module": 1,
+    "current_step": "reflect",
+    "product_scenario": "linkops",
+    "module_01": {
+      "context_exercise": {
+        "cause_1": "Database connection failure – application cannot connect to the database",
+        "verification_1": "Run docker ps to check database container status, then check docker logs",
+        "cause_2": "Application code error – unhandled exception in backend code",
+        "verification_2": "Run docker logs <app_container_name> to check application errors and stack traces"
+      }
+    }
   },
   "decisions": {
     "module_01": {
-      "project_layout": "monorepo",
-      "api_root": "apps/api/",
-      "framework": "fastapi"
-    },
-    "module_02": {
-      "database": "postgres",
-      "indexes": [
-        "idx_links_code_unique",
-        "idx_links_created_by",
-        "idx_clicks_link_id_clicked_at"
-      ]
-    },
-    "module_03": {
-      "redirect_style": "prefix_r",
-      "links_route": "links",
-      "redirect_prefix": "r",
-      "api_design_rule": "Strict edge validation allowlisting http/https schemes and fail-fast 400 Bad Request"
-    },
-    "module_04": {
-      "auth_method": "jwt",
-      "not_owner_status": 404,
-      "security_practice_learned": "Query-level tenant scoping to defeat IDOR and return 404 to hide cross-tenant existence",
-      "rate_limits": {
-        "login_per_min": 10,
-        "create_link_per_min": 30,
-        "redirect_per_min": 120,
-        "analytics_per_min": 60
-      }
-    },
-    "module_05": {
-      "error_strategy": "graceful",
-      "error_envelope": {
-        "code": "error.code",
-        "message": "error.message",
-        "request_id": "error.request_id"
-      },
-      "logging": "structured_json_with_redaction"
-    },
-    "module_06": {
-      "cache_strategy": "cache_aside",
-      "constraints_twist_type": "org_scoping",
-      "constraints_twist_action": "implement_now",
-      "cache_ttl_seconds": 300
-    },
-    "module_07": {
-      "jobs_strategy": "async_queue",
-      "retention_days": 30
-    },
-    "module_08": {
-      "search_strategy": "db_native",
-      "security_rule_learned": "Strict allowlisting for dynamic SQL schema identifiers (sort_by/order) and query-level tenant scoping",
-      "pagination": {
-        "default_page_size": 20,
-        "max_page_size": 100,
-        "offset_formula": "(page - 1) * page_size"
-      }
-    },
-    "module_09": {
-      "test_strategy": "integration_heavy",
-      "testing_rule_enforced": "Strict per-function fixture cleanup and relative delta assertions to prevent shared database state leakage and test flakiness"
-    },
-    "module_10": {
-      "deploy_strategy": "multi_service",
-      "migration_strategy": "startup",
-      "host_binding": "0.0.0.0",
-      "port_injection": "${PORT:-8000}"
+      "debugging_direction": "B",
+      "reasoning": "The service was working earlier but is now crashing on startup. Checking recent Git commits, configuration changes, and deployments can help identify what caused the issue."
     }
   }
 }
