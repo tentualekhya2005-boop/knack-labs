@@ -27,10 +27,25 @@
         "git": "2.52.0"
       }
     },
-    "completed_modules": [1],
-    "current_module": 1,
+    "completed_modules": [1, 2, 3],
+    "current_module": 3,
     "current_step": "reflect",
     "product_scenario": "linkops",
+    "module_03": {
+      "repro_approach": "B",
+      "repro_script": "scripts/repro_race.py",
+      "pre_fix_repro": "7 redirects, 3 errors (HTTP 500 duplicate key on analytics_link_id_bucket_unique)",
+      "root_cause": "Non-atomic SELECT-then-INSERT race condition in record_analytics_bucket",
+      "fix": "PostgreSQL atomic ON CONFLICT (link_id, timestamp_bucket) DO UPDATE SET count = analytics.count + 1",
+      "post_fix_verify": "110 concurrent requests across multiple runs, 0 errors, count exactly 110"
+    },
+    "module_02": {
+      "context_exercise": {
+        "failed_request": "r-003 failed with 404 not found for code nope99",
+        "slowest_request": "r-004 took 700ms total, with 680ms in slow database write",
+        "pattern_analysis": "One-off client lookup error, not a systemic infrastructure failure"
+      }
+    },
     "module_01": {
       "context_exercise": {
         "cause_1": "Database connection failure – application cannot connect to the database",

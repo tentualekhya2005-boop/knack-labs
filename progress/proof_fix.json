@@ -1,9 +1,9 @@
 {
-  "summary": "Completed Module 01 FIX: Implemented deterministic sorting to stabilize pagination under concurrent writes",
+  "summary": "Completed Module 02 FIX: Implemented defense-in-depth against Log Injection / CRLF log forging",
   "evidence": [
-    "Identified necessity of deterministic ordering: without an explicit ORDER BY clause, databases return rows in arbitrary order which shuffles under concurrent writes",
-    "Implemented deterministic primary key ordering: order_by(Link.id.asc()) guarantees persistent sequential indexing",
-    "Verified stability under concurrent insertions: inserted 5 new links between Page 1 and Page 2 queries, proving Page 1 (test01-test10) and Page 2 (test11-test20) maintained zero overlap (set())",
-    "Analyzed architectural trade-offs: evaluated cursor-based / keyset pagination as the long-term solution for high-throughput append-only streams"
+    "Identified log injection vulnerability: Unsanitized user strings containing newlines can deceive SIEM collectors and operators into reading forged events",
+    "Implemented CRLF escaping in logging formatter: Updated redact_text in apps/api/app/core/logging.py to explicitly replace '\\r' and '\\n' with literal escaped sequences",
+    "Enforced schema boundary validation: Pydantic LinkCreate rejects control characters (ASCII 0-31 including CR/LF) at API ingress",
+    "Verified defense: Logged malicious payload containing simulated fake admin login JSON; verified output remained on a single escaped line without splitting"
   ]
 }

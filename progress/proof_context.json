@@ -1,11 +1,9 @@
 {
-  "summary": "Completed Module 01 CONTEXT: Hypothesis-First Debugging micro-exercise",
+  "summary": "Completed Module 02 CONTEXT: Structured log literacy and log level triage micro-exercise",
   "evidence": [
-    "Analyzed the 500 Internal Server Error outage scenario without touching code or restarting services",
-    "Formulated Hypothesis 1: Database connection failure (application cannot connect to DB)",
-    "Defined Verification 1: Run 'docker ps' to check DB container status and 'docker logs <container>' to verify connectivity errors",
-    "Formulated Hypothesis 2: Application code error (unhandled exception or backend runtime crash)",
-    "Defined Verification 2: Run 'docker logs <app_container>' to capture error tracebacks and failing line numbers",
-    "Mastered the hypothesis-first debugging principle: observe symptom -> generate falsifiable theories -> targeted test to eliminate/confirm"
+    "Analyzed structured JSON log timelines by tracking correlation request IDs (req_id) from ingress to response egress",
+    "Identified client error vs server crash: r-003 failed with 404 (not found) for unknown short code 'nope99' in 10ms",
+    "Diagnosed latency breakdown: r-004 took 700ms total, with 680ms spent waiting on a slow database write warning (warn level)",
+    "Contrasted one-off 404 client errors with systemic infrastructure bottlenecks, proving that structured log fields allow immediate root cause isolation"
   ]
 }

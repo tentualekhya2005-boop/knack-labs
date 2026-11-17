@@ -1,11 +1,11 @@
 {
-  "summary": "Completed Module 01 BUILD: Diagnosed and resolved Bug #1 (Env var mismatch) and Bug #2 (Pagination boundary & sorting)",
+  "summary": "Completed Module 02 BUILD: Diagnosed and resolved Bug #3 (Log Level Override) and Bug #4 (Timestamp Timezone Mismatch)",
   "evidence": [
-    "Created progress/module-01-diagnosis.md documenting hypotheses, observations, fixes, and verification proofs",
-    "Verified LinkOps infrastructure: infra/docker-compose.yml, worker/main.py, scripts/seed.py, apps/api/app/routers/admin.py",
-    "Diagnosed Bug #1: DB_URL in .env mismatched DATABASE_URL in config, resulting in empty DB URL crash; fixed by standardizing to DATABASE_URL",
-    "Diagnosed Bug #2: Off-by-one pagination (offset = page * limit) skipped first 10 items; missing ORDER BY caused unstable ordering",
-    "Fixed Bug #2: Implemented offset = (page - 1) * limit with deterministic order_by(Link.id.asc())",
-    "Seeded 25 test links and verified across page=1 (test01-test10), page=2 (test11-test20), and page=3 (test21-test25): exactly 25/25 unique items"
+    "Diagnosed Bug #3: Hardcoded WARN log level override in apps/api/app/core/logging.py silenced request lifecycle logs; fixed by dynamically loading LOG_LEVEL from environment with default INFO",
+    "Verified Bug #3 fix: Sent requests to /health, /r/test01, and /r/unknown99, confirming structured INFO logs with correlation request IDs and latency metrics are emitted",
+    "Diagnosed Bug #4: Query filter in links_service.py compared UTC created_at against naive local datetime.now(), causing midnight 404s for servers located behind UTC",
+    "Fixed Bug #4: Enforced universal UTC timezone-aware comparisons using datetime.now(timezone.utc)",
+    "Verified Bug #4 fix: Links created at UTC midnight boundary resolve immediately without timezone lag",
+    "Maintained progress/module-02-diagnosis.md with all hypotheses, observations, and verification proofs"
   ]
 }

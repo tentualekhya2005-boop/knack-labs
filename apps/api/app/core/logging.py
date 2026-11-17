@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -26,7 +27,8 @@ SENSITIVE_HEADERS = {
 def redact_text(text: str) -> str:
     if not isinstance(text, str):
         return text
-    sanitized = text
+    # Sanitize CRLF control characters to prevent Log Injection (CRLF log forging)
+    sanitized = text.replace("\r", "\\r").replace("\n", "\\n")
     for pattern in SENSITIVE_PATTERNS:
         if "Bearer" in pattern.pattern:
             sanitized = pattern.sub(r"\1[REDACTED]", sanitized)
@@ -85,7 +87,10 @@ class StructuredJsonFormatter(logging.Formatter):
 
 def setup_logger(name: str = "app") -> logging.Logger:
     app_logger = logging.getLogger(name)
-    app_logger.setLevel(logging.INFO)
+    # Fixed Bug #3: Respect LOG_LEVEL from environment, defaulting to INFO
+    env_level = os.getenv("LOG_LEVEL", "INFO").upper()
+    level = getattr(logging, env_level, logging.INFO)
+    app_logger.setLevel(level)
     if not app_logger.handlers:
         handler = logging.StreamHandler(sys.stdout)
         handler.setFormatter(StructuredJsonFormatter())

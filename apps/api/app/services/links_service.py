@@ -154,7 +154,14 @@ def delete_link(
 
 
 def get_link_by_code(db: Session, code: str) -> Optional[Link]:
-    return db.query(Link).filter(Link.code == code).first()
+    # Fixed Bug #4: Ensure all timestamp comparisons strictly use timezone-aware UTC
+    now_utc = datetime.now(timezone.utc)
+    return (
+        db.query(Link)
+        .filter(Link.code == code)
+        .filter(Link.created_at <= now_utc)
+        .first()
+    )
 
 
 def list_links(
