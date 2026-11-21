@@ -1,0 +1,19 @@
+{
+  "step": "break",
+  "module": 3,
+  "divergent_file": "src/routes/teams.js",
+  "symptom": "Inconsistent error response schema across API endpoints during code review.",
+  "comparison": {
+    "expected_schema": {
+      "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Team name is required and cannot be empty"
+      }
+    },
+    "agent_generated_schema": {
+      "error": "Invalid team data: name is required and must be between 1 and 100 characters"
+    }
+  },
+  "client_impact": "Frontend clients and SDKs consuming the API expect a structured error object. Accessing res.error.code throws undefined / runtime crashes or requires special-casing per route, degrading API ergonomics.",
+  "root_cause_context_failure": "The context package described the error schema in prose (in progress/context-package.md) but failed to provide: (1) a shared helper function (e.g. sendError(res, status, code, message)), and (2) an existing reference route showing the exact invocation pattern. The AI defaulted to standard inline serialization."
+}

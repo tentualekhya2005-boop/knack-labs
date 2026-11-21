@@ -3,5 +3,5 @@ import assert from "node:assert/strict";
 import { listRoutes } from "../src/routes/index.js";
 
 test("starter routes are visible", () => {
-  assert.deepEqual(listRoutes(), ["GET /health", "GET /teams"]);
+  assert.deepEqual(listRoutes(), ["GET /health", "GET /teams", "POST /teams"]);
 });
