@@ -1,7 +1,7 @@
-import { handleCreateTeam, handleListTeams } from "./teams.js";
+import { handleCreateTeam, handleListTeams, handleUpdateMemberRole } from "./teams.js";
 
 export function listRoutes() {
   return ["GET /health", "GET /teams", "POST /teams"];
 }
 
-export { handleCreateTeam, handleListTeams };
+export { handleCreateTeam, handleListTeams, handleUpdateMemberRole };

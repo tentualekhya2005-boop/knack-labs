@@ -1,0 +1,35 @@
+{
+  "module": 8,
+  "step": "verify",
+  "ship_checklist_signoff": {
+    "1_all_endpoints_auth_checked": {
+      "status": "SIGNED_OFF",
+      "evidence": "Every route in src/routes/ (teams.js, invitations.js) extracts x-user-id and verifies identity. POST /teams/:id/invitations enforces isOwner || isAdmin. PUT /teams/:id/members/:uid enforces isTeamAdminOrOwner, rejects self-modification, and blocks non-owner promotions."
+    },
+    "2_all_inputs_validated": {
+      "status": "SIGNED_OFF",
+      "evidence": "Team name (1-100 chars, trimmed), invitation email (regex checked), role (validated against allowed enum ['admin', 'member', 'viewer', 'owner']), comment body (1-5000 chars, trimmed)."
+    },
+    "3_test_suite_passes": {
+      "status": "SIGNED_OFF",
+      "evidence": "node --test tests/*.test.js executed cleanly. 55 tests passing across 13 test files in 480ms with 0 failures."
+    },
+    "4_no_secrets_in_code_or_logs": {
+      "status": "SIGNED_OFF",
+      "evidence": "Zero hardcoded credentials or API keys; no error.stack dumped in HTTP responses; native crypto UUID generation; no PII logged in audit records."
+    },
+    "5_documentation_accurate": {
+      "status": "SIGNED_OFF",
+      "evidence": "docs/api.md cross-referenced and validated against real controller responses; docs/setup.md tested from clean environment; docs/adr.md documents all architectural choices."
+    },
+    "6_ci_is_green": {
+      "status": "SIGNED_OFF",
+      "evidence": ".github/workflows/ci.yml runs hermetic Node.js 18.x, 20.x, and 22.x matrix with npm test emitting binary exit code 0."
+    },
+    "7_rollback_plan_exists": {
+      "status": "SIGNED_OFF",
+      "evidence": "docs/rollback.md details SEV1/SEV2 trigger thresholds, 3-minute traffic diversion runbook, backward-compatible schema strategy, and postmortem SLAs."
+    }
+  },
+  "verdict": "PRODUCTION_READY_SIGN_OFF"
+}

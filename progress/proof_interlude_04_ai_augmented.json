@@ -1,0 +1,18 @@
+{
+  "interlude": 4,
+  "case_study": "The SolarWinds Hack — Code Review's Blind Spot",
+  "theme": "The limits of anomaly-based review and the dangers of code that 'looks right'",
+  "reflection_1_flaws_that_look_right": {
+    "insight": "AI code generation excels at producing syntax and structures that look completely idiomatic and correct, mirroring conventional enterprise patterns. Standard code review and static analysis are biased toward finding things that look anomalous or broken; they fail when malicious or defective logic is camouflaged as ordinary business logic.",
+    "defense_mechanism": "To detect flaws that look right, engineers cannot rely solely on visual inspection. We must employ negative invariant testing (asserting what the system must never permit), property-based fuzzing across unexpected unicode and boundary inputs, and sequence-based multi-hop authorization integration tests that exercise state across disparate components."
+  },
+  "reflection_2_implicit_trust_in_ai_pipeline": {
+    "unverified_assumptions": [
+      "Assuming the model's default patterns reflect hardened enterprise security rather than permissive tutorial code.",
+      "Assuming the provided prompt context is exhaustive and that omissions will be safely defaulted to least privilege.",
+      "Assuming client-side AI tools do not leak proprietary IP or sensitive data into telemetry and training loops."
+    ],
+    "verification_guardrails": "Treat all AI output as untrusted external user input. Never promote code to production based on green happy-path tests alone; enforce hermetic CI verification, negative integration gates, and human accountability at every boundary."
+  },
+  "status": "completed"
+}

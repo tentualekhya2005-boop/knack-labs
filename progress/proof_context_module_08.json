@@ -1,0 +1,25 @@
+{
+  "module": 8,
+  "step": "context",
+  "theme": "The Last Mile — From Demo-Ready to Production-Ready",
+  "persona": "tech-lead",
+  "four_pillars_of_production_readiness": {
+    "1_regression_protection": {
+      "definition": "Automated test suites that verify invariants across future refactors, driver updates, and multi-tenant boundary changes in any execution environment.",
+      "analogy": "Like building high guardrails and impact barriers along a mountain road rather than just driving carefully on a sunny afternoon."
+    },
+    "2_onboarding_documentation": {
+      "definition": "Clear, precise API specifications, RBAC hierarchy diagrams, and integration patterns enabling another engineer to extend roles or endpoints without reverse-engineering code.",
+      "analogy": "Like leaving clear wiring schematics inside an electrical breaker box so the next electrician does not cause a short circuit."
+    },
+    "3_automated_ci_pipeline": {
+      "definition": "Hermetic continuous integration pipeline executing all unit, integration, and security tests on every commit, emitting binary green/red signals without manual interventions.",
+      "analogy": "Like an automated factory assembly line scanner that halts the belt if any component deviates by even a millimeter."
+    },
+    "4_defensive_deployment_strategy": {
+      "definition": "Versioned releases with backward compatibility, zero-downtime database migrations, canary rollouts, and verified instant rollback runbooks.",
+      "analogy": "Like a trapeze artist always performing with a certified safety net securely rigged underneath."
+    }
+  },
+  "status": "ready_for_ship_decision"
+}

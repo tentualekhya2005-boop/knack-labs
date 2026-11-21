@@ -1,0 +1,18 @@
+{
+  "step": "interlude",
+  "module": 6,
+  "case_study": "The Boeing 737 MAX: MCAS and Automation Authority",
+  "reflection_1_who_has_the_last_word": {
+    "principle": "The human engineer maintains 100% unconditional authority and legal/production responsibility. The AI has zero decision-making sovereignty.",
+    "response_to_uncertainty": "Never accept code under the rationalization that 'the AI probably knows something I don't.' When an instinct signals something is amiss, pause immediately. Do not merge. Deconstruct the logic, write an adversarial black-box test, or isolate the function in a scratch script until the exact invariant is proven. If you cannot defend the code under SEV1 postmortem grilling, you do not ship it."
+  },
+  "reflection_2_the_single_point_of_failure": {
+    "identification": "The single point of failure is the fatigued, over-trusting human reviewer skimming diffs at the end of the day.",
+    "analysis": "Just as MCAS trusted a single un-redundant sensor to override experienced pilots, an engineering team that relies on a single tired reviewer trusting a green test suite creates a single point of catastrophic failure. Superficial tests often verify only the happy path, masking critical IDOR, race conditions, and unhandled exceptions.",
+    "systemic_interlocks": [
+      "Automated CI Security Scanners: Linters and SAST tools that enforce security rules out-of-band.",
+      "Multi-Reviewer Governance: Mandatory two-human peer approvals for data mutation and auth boundaries.",
+      "Black-Box Behavioral Invariants: Requiring negative test cases (unauthenticated 401, unauthorized 403, duplicate 409) before any pull request is merged."
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "module": 7,
+  "step": "context",
+  "persona": "tech-lead",
+  "understanding": "Individual code review catches unit bugs in isolated functions; system-level review catches integration gaps and architectural breakdown across call chains that AI cannot evaluate.",
+  "five_failure_categories": {
+    "1_business_logic_correctness": {
+      "definition": "AI faithfully implements whatever specification was prompted; it cannot assess whether the prompt aligns with actual product business requirements.",
+      "analogy": "Like a builder pouring concrete exactly where the blueprint marks, even if the blueprint accidentally placed the front door over an open swimming pool.",
+      "taskflow_audit_target": "Verification of RBAC invitation rules (only team owner/admin can invite, not general members)."
+    },
+    "2_security_in_context": {
+      "definition": "Functions that are clean, sanitized, and secure in isolation become catastrophic vulnerabilities when called in an unauthenticated or unauthorized multi-hop call chain.",
+      "analogy": "Like a high-security bank vault door installed on a shed made of cardboard walls.",
+      "taskflow_audit_target": "Verifying team ownership/membership on every nested route (/teams/:teamId/invitations, /tasks/:id/comments) rather than trusting inner helpers."
+    },
+    "3_architectural_coherence": {
+      "definition": "Disjointed agents introduce divergent paradigms (custom error formats vs standard middleware, raw queries vs repository pattern, disparate REST vs RPC naming).",
+      "analogy": "Like assembling a car where four different teams built doors that each use completely different handles, hinges, and key locks.",
+      "taskflow_audit_target": "Enforcing uniform AppError conventions, standardized HTTP response envelopes, and centralized logging across services."
+    },
+    "4_data_integrity_under_pressure": {
+      "definition": "AI writes happy-path code assuming single-threaded execution; race conditions, concurrent acceptance, and cascading deletes cause corrupt state.",
+      "analogy": "Like a single-seat revolving door that shatters when five people try to squeeze through at the exact same second.",
+      "taskflow_audit_target": "Handling concurrent invitation acceptance and orphan comment prevention on team/task deletion."
+    },
+    "5_compliance_and_privacy": {
+      "definition": "AI produces generic boilerplate audit trails that may fail statutory compliance (GDPR/SOC2) or unlawfully log sensitive credentials and PII.",
+      "analogy": "Like a security logbook that dutifully writes down everyone's entry time, but also copies down their credit card numbers and passport pins in plain view.",
+      "taskflow_audit_target": "Sanitizing audit logs and activity payloads to strip auth tokens, hashes, and sensitive personal identifiers."
+    }
+  },
+  "status": "ready_for_architecture_audit"
+}

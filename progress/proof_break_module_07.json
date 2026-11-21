@@ -1,0 +1,15 @@
+{
+  "module": 7,
+  "step": "break",
+  "vulnerability": "Broken Function Level Authorization (BFLA) / Vertical Privilege Escalation",
+  "exploit_chain": {
+    "step_1_vector": "HTTP PUT /teams/:teamId/members/:targetUserId",
+    "step_2_authentication": "Viewer logs in with valid credentials, providing x-user-id for their viewer account.",
+    "step_3_flawed_guard": "Endpoint middleware executes `isTeamMember(teamId, userId)`. Because the viewer is a recognized team member (role='viewer'), the membership check evaluates to true and allows execution to proceed.",
+    "step_4_missing_authorization": "The handler omits `isTeamAdmin(teamId, userId)` or `isTeamOwner(teamId, userId)` permission validation.",
+    "step_5_unvalidated_input": "The request body payload `{ \"role\": \"admin\" }` is accepted directly without schema validation or role enum constraints.",
+    "step_6_escalation": "The database record is updated: `member.role = 'admin'`. The viewer has successfully escalated their privileges to full team administrator without administrative approval."
+  },
+  "root_cause_analysis": "Composition of two seemingly low-to-medium issues: (1) using membership verification instead of role authorization, and (2) absence of input schema enum validation. In isolation, unit tests for membership and updating both pass; composed at the system level, they constitute an exploitable privilege escalation vulnerability.",
+  "status": "diagnosed_and_verified"
+}

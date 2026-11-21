@@ -5,7 +5,8 @@ export const ROLES = Object.freeze({
   OWNER: "owner",
   ADMIN: "admin",
   MEMBER: "member",
-  GUEST: "guest"
+  GUEST: "guest",
+  VIEWER: "viewer"
 });
 
 export function addMemberToTeam({ teamId, userId, role = ROLES.MEMBER }) {
@@ -57,4 +58,34 @@ export function removeMemberFromTeam(teamId, userId) {
   }
   memberships.splice(index, 1);
   return true;
+}
+
+export function updateMemberRole({ teamId, userId, role }) {
+  if (!teamId || typeof teamId !== "string") {
+    const err = new Error("Invalid membership: teamId is required");
+    err.code = "VALIDATION_ERROR";
+    throw err;
+  }
+  if (!userId || typeof userId !== "string") {
+    const err = new Error("Invalid membership: userId is required");
+    err.code = "VALIDATION_ERROR";
+    throw err;
+  }
+  const validRoles = Object.values(ROLES);
+  if (!validRoles.includes(role)) {
+    const err = new Error(`Invalid membership role: must be one of ${validRoles.join(", ")}`);
+    err.code = "VALIDATION_ERROR";
+    throw err;
+  }
+
+  const member = getTeamMember(teamId, userId);
+  if (!member) {
+    const err = new Error(`Member ${userId} not found in team ${teamId}`);
+    err.code = "NOT_FOUND";
+    throw err;
+  }
+
+  member.role = role;
+  member.updated_at = new Date().toISOString();
+  return member;
 }

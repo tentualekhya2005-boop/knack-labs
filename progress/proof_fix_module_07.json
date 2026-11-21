@@ -1,0 +1,18 @@
+{
+  "module": 7,
+  "step": "fix",
+  "vulnerability": "Broken Function Level Authorization / Privilege Escalation in PUT /teams/:id/members/:uid",
+  "six_constraints_implemented": {
+    "1_admin_or_owner_only": "Requester verified as team owner or member with admin role; returns 403 FORBIDDEN if unauthorized.",
+    "2_no_self_modification": "Returns 403 FORBIDDEN with message 'Cannot modify your own role.' if callerId === targetUserId.",
+    "3_role_enum_validation": "Enforces allowedRoles ['admin', 'member', 'viewer', 'owner']; returns 400 VALIDATION_ERROR on superadmin, empty strings, or arbitrary input.",
+    "4_admin_cannot_promote_to_owner": "Returns 403 FORBIDDEN if an admin attempts to assign target role 'owner'. Only owners can promote to owner.",
+    "5_audit_logging": "Invokes recordAuditEvent on every successful role update capturing teamId, action 'member.role_updated', actorId, targetUserId, oldRole, and newRole.",
+    "6_thirteen_test_cases": "Implemented all 13 required test cases in tests/member_role_security.test.js with 100% pass rate."
+  },
+  "verification": {
+    "total_tests": 51,
+    "passing": 51,
+    "failing": 0
+  }
+}

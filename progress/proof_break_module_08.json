@@ -1,0 +1,11 @@
+{
+  "module": 8,
+  "step": "break",
+  "failure_mode": "Works on My Machine, Fails in CI (Ambient State Leakage)",
+  "root_cause_analysis": {
+    "flawed_assumption": "AI-generated integration tests frequently assume implicit ambient state—such as pre-existing seed users, default team IDs, or persisted test databases left over from local development runs. In CI, containers boot from a completely blank slate with empty stores.",
+    "why_ai_makes_the_assumption": "AI models generate code conditioned on the immediate context visible to them in development. They see references to existing entities and hallucinate that those entities are global constants rather than transient state. Without explicit environment-independence instructions, the model defaults to the developer's local environment.",
+    "consequence": "Tests pass locally due to leftover state from previous runs, but fail deterministically in CI with null pointer exceptions or NOT_FOUND errors when attempting to query non-existent seed records."
+  },
+  "remediation_strategy": "Hermetic per-test lifecycle: every test must explicitly initialize its own dependencies, create all required records using isolated UUIDs, and reset shared store collections in beforeEach/setup and afterEach/teardown hooks."
+}

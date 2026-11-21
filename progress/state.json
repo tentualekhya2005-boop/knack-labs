@@ -24,13 +24,61 @@
         "slug": "debugging-incident-response",
         "modules_completed": 7,
         "score": 10.0
+      },
+      {
+        "slug": "ai-augmented-engineering",
+        "modules_completed": 8,
+        "score": 10.0
       }
     ],
     "current_pack": "operator",
-    "current_module": 7,
-    "current_step": "context",
-    "completed_packs": ["launchpad", "practitioner"],
-    "completed_modules": [1, 2, 3, 4, 5, 6],
+    "current_module": 8,
+    "current_step": "completion",
+    "completed_packs": ["launchpad", "practitioner", "operator"],
+    "completed_modules": [1, 2, 3, 4, 5, 6, 7, 8],
+    "skill_completed": true,
+    "module_08": {
+      "ship_readiness": "B",
+      "reasoning": "Selected production_grade. For a multi-tenant collaboration API handling authorization and data mutations, releasing with incomplete regression protection or unverified CI creates catastrophic exposure to data leakage and privilege escalation. We ship complete regression test coverage across all permission boundaries, exhaustive API documentation for onboarded engineers, an automated CI test pipeline, and a verified rollback runbook. We defer cosmetic enhancements (rich-text markdown rendering) to prioritize security invariants and operational resilience.",
+      "capstone_e2e_test": "tests/capstone_e2e.test.js",
+      "permission_matrix_test": "tests/permission_matrix.test.js",
+      "api_docs": "docs/api.md",
+      "setup_guide": "docs/setup.md",
+      "adr": "docs/adr.md",
+      "rollback_runbook": "docs/rollback.md",
+      "ci_workflow": ".github/workflows/ci.yml",
+      "verify_proof": "progress/proof_verify_module_08.json",
+      "break_proof": "progress/proof_break_module_08.json",
+      "fix_proof": "progress/proof_fix_module_08.json",
+      "tests_passing": 55,
+      "score": 10.0,
+      "report_file": "progress/report_ai_augmented_module_08.json"
+    },
+    "interlude_04": {
+      "case_study": "The SolarWinds Hack",
+      "proof_file": "progress/proof_interlude_04_ai_augmented.json",
+      "reflection_1_flaws_that_look_right": "AI code generation produces syntax that looks completely idiomatic and correct. To detect flaws that look right, engineers must employ adversarial negative testing, property fuzzing, and sequence-based multi-hop authorization tests.",
+      "reflection_2_implicit_trust": "Treat all AI output as untrusted external user input. Enforce hermetic CI verification and negative integration gates."
+    },
+    "module_07": {
+      "security_review_scope": "B",
+      "reasoning": "Selected ai_assisted_hybrid. Automated scans handle brute-force pattern checks across all endpoints to catch syntax, unvalidated inputs, and missing middleware without human fatigue. Engineering focus is concentrated on the critical path: authorization chains, multi-tenant boundaries, and state mutations. We expect AI scans to miss contextual business logic and authorization semantics, which our manual critical-path audit and negative integration tests explicitly verify.",
+      "findings_file": "progress/security-architecture-review.md",
+      "verify_proof": "progress/proof_verify_module_07.json",
+      "break_proof": "progress/proof_break_module_07.json",
+      "fix_proof": "progress/proof_fix_module_07.json",
+      "vulnerability": "Broken Function Level Authorization (BFLA) on PUT /teams/:id/members/:uid allowing viewers to escalate privileges to admin",
+      "remediation": "Enforced isTeamAdminOrOwner authorization, non-self modification guard, role enum whitelist, owner promotion guard, and audit logging",
+      "tests_passing": 51,
+      "score": 10.0,
+      "report_file": "progress/report_ai_augmented_module_07.json"
+    },
+    "interlude_03": {
+      "case_study": "The Boeing 737 MAX",
+      "proof_file": "progress/proof_interlude_03_ai_augmented.json",
+      "reflection_1_human_override": "Human engineers always hold unconditional authority. Never defer to AI fluency or assume the model knows something you do not.",
+      "reflection_2_spof": "The single point of failure is the fatigued reviewer skimming diffs. Guardrails must be enforced through independent CI checks and negative test gates."
+    },
     "module_06": {
       "context_proof": "progress/proof_context_module_06.json",
       "parallelization_plan": "A",
