@@ -1,11 +1,16 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
+from app.core.dependencies import get_current_admin
 from app.db.session import get_db
 from app.models.link import Link
 from app.schemas.link import LinkResponse
 
-router = APIRouter(prefix="/api/admin/links", tags=["admin"])
+router = APIRouter(
+    prefix="/api/admin/links",
+    tags=["admin"],
+    dependencies=[Depends(get_current_admin)],
+)
 
 
 @router.get("", response_model=List[LinkResponse])
@@ -16,13 +21,18 @@ def get_admin_links(
     db: Session = Depends(get_db),
 ):
     """Admin link listing endpoint.
-    NOTE: Currently has Bug #2 injected:
-    1. Incorrect offset calculation: page * limit (skips first page items and duplicates boundary)
-    2. Missing deterministic ORDER BY clause.
+    Fixed Bug #2: Deterministic ordering and zero-indexed offset calculation
+    Fixed Bug #7: Eager load relationships to eliminate N+1 queries
     """
-    # Fixed Bug #2: Deterministic ordering and zero-indexed offset calculation
     offset = (page - 1) * limit
-    links = db.query(Link).order_by(Link.id.asc()).offset(offset).limit(limit).all()
+    links = (
+        db.query(Link)
+        .options(selectinload(Link.clicks))
+        .order_by(Link.id.asc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
 
     base_url = str(request.base_url)
     return [
@@ -43,6 +53,7 @@ def get_admin_links(
 @router.delete("/{link_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_admin_link(
     link_id: int,
+    admin_id: str = Depends(get_current_admin),
     db: Session = Depends(get_db),
 ):
     link = db.query(Link).filter(Link.id == link_id).first()
@@ -51,6 +62,12 @@ def delete_admin_link(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Link with id {link_id} not found",
         )
+    code = link.code
     db.delete(link)
     db.commit()
+
+    # Fixed Bug #9: Stale Cache Invalidation on Admin Delete
+    from app.core.cache import cache_service
+    cache_service.invalidate_redirect_target(code)
+
     return None

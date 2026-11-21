@@ -98,7 +98,31 @@ class CacheService:
             logger.warning("Live Redis unavailable (%s). Using in-memory dictionary fallback.", reason)
 
     def _cache_key(self, code: str) -> str:
-        return f"redirect:{code}"
+        # Separate namespace for redirect targets (link:redirect:<code_or_key>)
+        return f"link:redirect:{code}"
+
+    def is_analytics_processed(self, event_id: str) -> bool:
+        """Deduplication check in dedicated analytics:dedup:<event_id> namespace."""
+        key = f"analytics:dedup:{event_id}"
+        val = None
+        if self._redis_client:
+            try:
+                val = self._redis_client.get(key)
+            except Exception:
+                pass
+        if val is None:
+            val = self.memory_fallback.get(key)
+        return bool(val)
+
+    def mark_analytics_processed(self, event_id: str, ttl_seconds: int = 86400) -> None:
+        """Mark analytics event processed in dedicated analytics:dedup:<event_id> namespace."""
+        key = f"analytics:dedup:{event_id}"
+        if self._redis_client:
+            try:
+                self._redis_client.set(key, "1", ex=ttl_seconds)
+            except Exception:
+                pass
+        self.memory_fallback.set(key, "1", ttl_seconds)
 
     def get_redirect_target(self, code: str) -> Optional[Dict[str, Any]]:
         """Retrieve cached redirect metadata by short code.

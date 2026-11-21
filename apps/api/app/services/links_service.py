@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import HTTPException, status
 from sqlalchemy import or_
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.models.click import ClickEvent
 from app.models.link import Link
@@ -171,7 +171,8 @@ def list_links(
     skip: int = 0,
     limit: int = 20,
 ) -> List[LinkResponse]:
-    query = db.query(Link)
+    # Fixed Bug #7: Eager load relationships to prevent N+1 queries
+    query = db.query(Link).options(selectinload(Link.clicks))
     if principal_id:
         query = query.filter(Link.created_by == principal_id)
     links = query.order_by(Link.created_at.desc()).offset(skip).limit(limit).all()
@@ -209,7 +210,8 @@ def search_links(
     page_size = min(max(1, page_size), 100)
 
     # Base query strictly scoped to tenant (defeats IDOR / cross-tenant leakage)
-    query = db.query(Link).filter(Link.created_by == principal_id)
+    # Fixed Bug #7: Eager load relationships to prevent N+1 query loops
+    query = db.query(Link).options(selectinload(Link.clicks)).filter(Link.created_by == principal_id)
 
     # Search keyword filter across long_url, code, tags
     if q and q.strip():
