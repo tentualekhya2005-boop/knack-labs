@@ -1,0 +1,20 @@
+{
+  "step": "context",
+  "module": 5,
+  "concept": "Refine vs. Restart & The Two-Iteration Rule",
+  "surface_vs_structural": {
+    "surface": {
+      "definition": "Defects in expression or polish where the underlying architecture remains sound.",
+      "test": "Fixing the issue leaves the rest of the codebase and architecture intact.",
+      "action": "Refine via surgical follow-up prompt.",
+      "examples": ["Naming convention fix", "Missing error wrapper / status code", "Extracting config constant"]
+    },
+    "structural": {
+      "definition": "Defects in foundational architecture, data flow, or state model.",
+      "test": "Fixing the issue cascades into breaking or rewriting surrounding components.",
+      "action": "Restart with a new prompt and revised architectural strategy.",
+      "examples": ["HTTP polling vs WebSockets", "In-memory volatile store vs durable queue", "Monolithic coupling vs event-driven pub/sub"]
+    }
+  },
+  "two_iteration_rule": "If code quality and acceptance criteria do not converge within two refinement iterations, kill the thread and restart fresh. Layering successive patches onto a structurally flawed foundation triggers quality spirals and compounding context pollution."
+}

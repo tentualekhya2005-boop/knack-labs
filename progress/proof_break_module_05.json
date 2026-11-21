@@ -1,0 +1,11 @@
+{
+  "step": "break",
+  "module": 5,
+  "symptom": "WebSocket connection silently drops after delivering first event following Round 3 reconnection changes.",
+  "root_cause_diagnosis": {
+    "phenomenon": "Iteration Spiral caused by Context Window Pollution.",
+    "mechanism": "Successive patch prompts in a long conversational history introduce competing versions of the codebase and contradictory instructions. The LLM focuses heavily on the recency bias of the latest prompt (adding reconnection logic) while discarding or mutating earlier working invariants (socket event listener stability).",
+    "structural_vs_surface": "Structural context breakdown: attempting a 4th refinement prompt in this contaminated session will only introduce further regressions. The correct engineering response is a clean restart."
+  },
+  "remedy": "Apply the Two-Iteration Rule: stop patching. Synthesize the validated requirements from Rounds 1-3 into a single, clean prompt and restart in a fresh conversation."
+}

@@ -1,0 +1,16 @@
+{
+  "step": "fix",
+  "module": 4,
+  "fix_prompt_specification": "In src/routes/invitations.js, the POST /teams/:teamId/invitations endpoint checks authentication but does not verify that the requesting user is an admin or owner of the target team. Add an authorization check after authentication that: (1) Verifies the team exists, (2) Checks if team.owner_id === userId OR memberships contains an active record for team_id and user_id with role === 'admin' or 'owner', (3) If neither matches, returns 403 Forbidden with standard { error: { code: 'FORBIDDEN', message: 'Forbidden: only team owners or admins can send invitations' } }, (4) If passed, proceeds with invitation creation. Do NOT change existing validation or response formatting.",
+  "code_inspection": {
+    "implemented_in": "src/routes/invitations.js",
+    "verification_mechanism": "Explicit RBAC verification checking team.owner_id === userId || memberships.some(m => m.team_id === teamId && m.user_id === userId && (m.role === 'admin' || m.role === 'owner')) with HTTP 403 response on failure.",
+    "placeholder_check": "Zero placeholders or mocks; actual store queries executed."
+  },
+  "dual_test_verification": {
+    "admin_test": "HTTP 201 Created for authenticated team admin usr_bob_admin",
+    "non_admin_test": "HTTP 403 Forbidden for authenticated team member usr_charlie_member",
+    "unauthorized_test": "HTTP 401 Unauthorized for unauthenticated requests",
+    "total_tests_passing": "21/21 tests pass across entire suite"
+  }
+}

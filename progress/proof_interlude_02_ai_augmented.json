@@ -1,0 +1,24 @@
+{
+  "step": "interlude",
+  "module": 4,
+  "case_study": "Samsung's AI-Generated Code Leak (March 2023)",
+  "reflection_1_context_boundary": {
+    "boundary_policy": "The line between permissible context and exfiltration cannot rely on individual developer instinct or late-night memory; it must be an enforced policy supported by automated pre-commit / pre-prompt scanning.",
+    "strictly_forbidden_elements": [
+      "API keys, private certificates, database credentials, environment variable manifests (.env).",
+      "Customer Personally Identifiable Information (PII), raw database production dumps, and operational audit telemetry.",
+      "Core proprietary trade secrets (e.g. chip fabrication optimization recipes, proprietary trading algorithms, custom ML weights).",
+      "Executive strategy transcripts, yield metrics, unannounced patent filings, and supplier negotiations."
+    ],
+    "safe_context_rule": "Abstract real implementation details into isolated interface contracts, domain schemas, and synthetic mock fixtures before providing context to external AI models."
+  },
+  "reflection_2_the_middle_path": {
+    "flaw_of_blanket_bans": "A blanket ban creates 'Shadow AI' where engineers covertly paste code from personal devices to stay competitive. Total prohibition surrenders velocity to competitors.",
+    "structural_controls": [
+      "Enterprise Zero-Data-Retention SLAs: Procure dedicated B2B enterprise endpoints (e.g. Azure OpenAI / Vertex AI) legally prohibiting vendor model training or prompt retention.",
+      "Automated Client-Side DLP Interceptors: Enforce IDE-level and proxy-level Data Loss Prevention (gitleaks, regex secret scrubbers) that block API keys, customer identifiers, and marked internal files before prompts touch the network.",
+      "On-Premises Air-Gapped Code Models: Host dedicated open-weight models on internal GPU clusters for top-secret fabrication, finance, or algorithmic divisions.",
+      "The 11 PM Test: Guardrails succeed only when they are automated in software. If safety depends on a tired engineer remembering not to paste code at 11 PM, the system has already failed."
+    ]
+  }
+}

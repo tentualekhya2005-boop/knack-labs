@@ -1,0 +1,48 @@
+{
+  "step": "verify",
+  "module": 4,
+  "test_suite": "tests/invitation.test.js",
+  "results": [
+    {
+      "test_number": 1,
+      "scenario": "Invite a user who is already a team member",
+      "request": "POST /teams/:teamId/invitations with existing member email bob@taskflow.dev",
+      "expected": "409 Conflict with error code CONFLICT",
+      "actual": "HTTP 409 with { error: { code: 'CONFLICT', message: 'User with email bob@taskflow.dev is already a member of this team' } }",
+      "status": "PASS"
+    },
+    {
+      "test_number": 2,
+      "scenario": "Create a team with an empty name",
+      "request": "POST /teams with { name: '   ' }",
+      "expected": "400 Bad Request with validation error",
+      "actual": "HTTP 400 with { error: { code: 'VALIDATION_ERROR', message: 'Invalid team data: name is required and must be between 1 and 100 characters' } }",
+      "status": "PASS"
+    },
+    {
+      "test_number": 3,
+      "scenario": "Call invitation endpoint without authentication",
+      "request": "POST /teams/:teamId/invitations with missing x-user-id header",
+      "expected": "401 Unauthorized",
+      "actual": "HTTP 401 with { error: { code: 'UNAUTHORIZED', message: 'Unauthorized: user identity required' } }",
+      "status": "PASS"
+    },
+    {
+      "test_number": 4,
+      "scenario": "Call invitation endpoint as a non-member/non-admin",
+      "request": "POST /teams/:teamId/invitations with stranger user id attempting to invite to another's team",
+      "expected": "403 Forbidden",
+      "actual": "HTTP 403 with { error: { code: 'FORBIDDEN', message: 'Forbidden: only team owners or admins can send invitations' } }",
+      "status": "PASS"
+    },
+    {
+      "test_number": 5,
+      "scenario": "Send an invitation with an invalid email format",
+      "request": "POST /teams/:teamId/invitations with { email: 'not-an-email' }",
+      "expected": "400 Bad Request with validation error",
+      "actual": "HTTP 400 with { error: { code: 'VALIDATION_ERROR', message: 'Invalid invitation: email must be a valid email address' } }",
+      "status": "PASS"
+    }
+  ],
+  "full_suite_summary": "19/19 tests passing across starter, team model, team routes, membership, and invitation suites in 197ms."
+}

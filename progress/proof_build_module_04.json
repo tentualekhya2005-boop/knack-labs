@@ -1,0 +1,36 @@
+{
+  "step": "build",
+  "module": 4,
+  "review_summary_file": "progress/review-findings.md",
+  "files_reviewed": [
+    "src/models/team.js",
+    "src/models/membership.js",
+    "src/routes/teams.js"
+  ],
+  "findings_count": {
+    "critical": 1,
+    "high": 3,
+    "medium": 7,
+    "low": 4
+  },
+  "top_findings": [
+    {
+      "file": "src/models/membership.js",
+      "category": "Edge Cases / Security",
+      "severity": "critical",
+      "issue": "removeMemberFromTeam permits removing the sole team owner, leaving the team orphaned without administrative authority."
+    },
+    {
+      "file": "src/routes/teams.js",
+      "category": "Security / Business Logic",
+      "severity": "high",
+      "issue": "handleListTeams filters solely by team.owner_id === userId, ignoring memberships and blinding non-owner members/admins to their teams."
+    },
+    {
+      "file": "src/routes/teams.js",
+      "category": "Error Handling",
+      "severity": "high",
+      "issue": "Catch-all handler maps all exceptions to 400 VALIDATION_ERROR, obscuring 500 internal errors from operational monitoring."
+    }
+  ]
+}

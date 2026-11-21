@@ -1,0 +1,10 @@
+{
+  "step": "break",
+  "module": 4,
+  "vulnerability": "IDOR (Insecure Direct Object Reference)",
+  "endpoint": "POST /teams/:teamId/invitations",
+  "symptom": "Any authenticated user can dispatch invitations on behalf of arbitrary teams by swapping the teamId URL parameter.",
+  "root_cause": "The AI conflated Authentication (verifying caller identity) with Authorization (verifying caller permissions over a specific resource). It verified req.user was non-null, but omitted the ownership/RBAC query joining the caller's ID with the team's admin role.",
+  "analogy": "Hotel key card room number tampering: the key card proves you are a legitimate hotel guest (authenticated), but tampering with the card to unlock Room 417 grants unauthorized entry because the lock failed to verify ownership of that specific room.",
+  "ai_pattern_failure": "LLMs statistical next-token prediction strongly associates API handlers with authentication middleware (generic pattern), but rarely with per-resource authorization checks (domain-specific logic), leaving IDOR holes in generated code."
+}

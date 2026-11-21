@@ -1,0 +1,18 @@
+{
+  "step": "fix",
+  "module": 6,
+  "fix_strategy": "Option 2: Minimal Integration Glue Module",
+  "implementation_file": "src/services/comment_audit_glue.js",
+  "test_file": "tests/glue_integration.test.js",
+  "glue_mechanics": {
+    "subscribes_to": ["comment.created", "comment.updated", "comment.deleted"],
+    "records_to": "recordAuditEvent() in src/models/audit_log.js",
+    "mapping": {
+      "action": "Preserves exact domain action string",
+      "resourceType": "Explicitly sets resourceType: 'comment' regardless of HTTP route prefix",
+      "resourceId": "Populates commentId",
+      "metadata": "Captures taskId context"
+    }
+  },
+  "verification": "All 3 comment lifecycle events verified logged with resourceType: 'comment'; 38/38 tests passing across test suite."
+}

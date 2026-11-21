@@ -1,0 +1,18 @@
+{
+  "step": "context",
+  "module": 6,
+  "concept": "Parallel Agent Management & Interface Contract Boundaries",
+  "merge_problem": "When multiple agents modify shared schema or state boundaries concurrently without synchronization, isolated code correctness produces integration failure.",
+  "micro_exercise": {
+    "parallelizable_tasks": [
+      "Task Stream A: Team Invitations & RBAC Membership endpoints (touches invitations, memberships stores)",
+      "Task Stream B: Real-Time Activity Feed & Audit Logger (touches activityFeed service and events bus)"
+    ],
+    "strictly_sequential_tasks": [
+      "Task 1 (Team Entity Model) MUST precede Task 2 (Team Route Controllers)",
+      "Task 3 (Membership Schema) MUST precede Task 4 (RBAC Permission Middleware)"
+    ],
+    "dependency_graph_summary": "Foundation (Team Model & Store) -> Fan-out: [Stream A: Invitations/RBAC] || [Stream B: Activity/Audit] -> Fan-in: Integration Gateway & Contract Verification"
+  },
+  "construction_analogy": "Running electrical wiring and plumbing crews without a shared blueprint: both work fast and correctly in isolation, but collide when claiming the same physical bulkhead. Interface contracts provide the immutable shared blueprint."
+}

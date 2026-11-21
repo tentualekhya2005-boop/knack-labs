@@ -1,0 +1,12 @@
+{
+  "step": "fix",
+  "module": 5,
+  "recovery_action": "Clean Context Restart with Explicit Constraints (Option 2)",
+  "restart_prompt_invariants": [
+    "Channel Multiplexing: Every subscription and event emission is strictly scoped to `team:${teamId}`.",
+    "Bounded Reconnection Buffer: Circular buffer per team (max 50 events) allowing reconnecting clients to replay events missed since last known ISO timestamp.",
+    "Decoupled Connection Lifecycle: `subscribe()` returns an explicit teardown function `() => unsubscribe(teamId, callback)` that cleans up EventEmitter listeners and deletes empty map entries.",
+    "Data Integrity: Frozen `ACTIVITY_TYPES` enum and strict parameter validation rejecting unverified payloads."
+  ],
+  "verification_status": "All 4 critical scenarios verified passing: connection, event delivery, disconnection, and timestamped replay. 26/26 automated tests passing in tests/*.test.js."
+}

@@ -1,0 +1,22 @@
+{
+  "step": "context",
+  "module": 4,
+  "five_failure_categories": {
+    "security": {
+      "finding": "SQL injection via string interpolation in SQL queries ('${teamId}', '${email}'); IDOR vulnerability because any authenticated user can invite anyone to any team without admin/membership authorization."
+    },
+    "edge_cases": {
+      "finding": "Missing validation on email format/null/empty; missing check for existing team membership or self-invitation; unvalidated teamId format."
+    },
+    "error_handling": {
+      "finding": "Catch block swallows error details with console.log; no transaction rollback if emailService.send fails after database insert, leaving orphaned pending invitations."
+    },
+    "naming_and_abstractions": {
+      "finding": "createInvitation violates single responsibility by orchestrating validation, persistence, and external email dispatch; SELECT * query when only name is needed; log line leaks internal topology."
+    },
+    "test_coverage": {
+      "finding": "Single happy-path test with tautological mock returning identical payload for both queries; zero assertions on query parameters, payload body, or error paths."
+    }
+  },
+  "mental_model": "Pattern completion in LLMs naturally defaults to high-probability tokens (the happy path). Defensive code (authorization barriers, rollback logic, edge case validation) represents statistically lower probability paths that human senior engineers must systematically inspect and enforce."
+}
