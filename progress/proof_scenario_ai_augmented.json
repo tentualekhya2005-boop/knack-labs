@@ -1,0 +1,8 @@
+{
+  "summary": "Locked in canonical product scenario: Team Collaboration (team-collaboration)",
+  "evidence": [
+    "Confirmed canonical scenario: team-collaboration covering team creation, invitations, RBAC permissions, comment threads with mentions, real-time activity feeds, and audit logging.",
+    "Acknowledged hard constraints: explicit verifiable role enforcement, tamper-proof replay-resistant invitation acceptance, strictly ordered consistent activity feed events, and forensically complete audit logging.",
+    "Recorded bootcamp.product_scenario = 'team-collaboration' in progress/state.json."
+  ]
+}

@@ -1,32 +1,41 @@
 {
-  "skill": "debugging-incident-response",
-  "session_id": "u9ryX34r4-lUa66-293rY",
+  "skill": "ai-augmented-engineering",
+  "session_id": "8xycaOpMxkdel_Xc4GI2Q",
   "bootcamp": {
+    "product_scenario": "team-collaboration",
     "pretest": {
-      "self_rating": "ok",
-      "slow_app_checks": [
-        "CPU and memory usage",
-        "application logs",
-        "database and network performance"
-      ],
-      "econnrefused_5432": "The PostgreSQL database is probably not running or is not accepting connections on port 5432",
-      "symptom_vs_root_cause": "A symptom is what we observe, while a root cause is the actual reason for the problem",
-      "local_vs_prod_discrepancy": [
-        "Different configurations or environment variables",
-        "Different software versions or dependencies"
-      ],
-      "first_action_error_vs_repro": "Read the error message carefully first – it helps understand where the problem occurred and gives clues about how to fix it",
-      "down_at_2am_first_action": "Check if anything was deployed recently – a recent deployment may have caused the issue, and we can consider rolling it back",
-      "coworker_worked_yesterday_followup": "What changes were made since yesterday?",
-      "os": "Windows 11",
-      "shell": "PowerShell",
+      "self_rating": "strong",
       "tools_verified": {
         "python": "3.13.5",
-        "docker": "29.9.2",
-        "curl": "8.22.0",
+        "node": "v22.17.1",
         "git": "2.52.0"
-      }
+      },
+      "os": "Windows 11",
+      "shell": "PowerShell",
+      "ai_tool_mode": "agent mode"
     },
+    "completed_skills": [
+      {
+        "slug": "system-design-fundamentals",
+        "modules_completed": 10,
+        "score": 10.0
+      },
+      {
+        "slug": "debugging-incident-response",
+        "modules_completed": 7,
+        "score": 10.0
+      }
+    ],
+    "current_pack": "launchpad",
+    "current_module": 1,
+    "current_step": "reflect",
+    "module_01": {
+      "delegation_strategy": "B",
+      "reasoning": "Breaking the feature into small atomic tasks ensures tight feedback loops: reviewing small diffs (30 lines) is manageable, catches faulty assumptions before they cascade into downstream components, and avoids the compounding cost of refactoring massive multi-file diffs.",
+      "score": 10.0,
+      "report_file": "progress/report_ai_augmented_module_01.json"
+    }
+  },
     "completed_modules": [1, 2, 3, 4, 5, 6, 7],
     "completed_packs": ["launchpad", "practitioner", "operator"],
     "current_pack": "operator",

@@ -1,0 +1,9 @@
+{
+  "summary": "Completed Module 01 Step 6 FIX: Diagnosed agent root failure mode (insufficient context & root anchoring), authored constrained prompt template, and distinguished prompt-fixable claims from CLI-verified invariants.",
+  "evidence": [
+    "Identified failure cause: agent anchored on root-level governance files rather than inspecting nested src/ and tests/ subtrees.",
+    "Authored constrained prompt template specifying exact target files (src/models/store.js, src/routes/index.js, tests/starter.test.js).",
+    "Established architectural rule: code structure is prompt-fixable with scoped context, while runtime execution must be verified via independent CLI commands.",
+    "Documented complete root cause analysis and corrected prompting pattern in progress/trust-audit.md."
+  ]
+}
